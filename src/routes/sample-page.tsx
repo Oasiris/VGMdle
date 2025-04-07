@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
 import crabLogo from '/crab-favicon.svg'
-import './home.scss'
+import './sample-page.scss'
 
 function Home() {
     const [count, setCount] = useState(0)
