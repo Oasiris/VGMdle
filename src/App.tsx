@@ -59,9 +59,10 @@ function Layout() {
             <hr />
 
             <footer>
-                <br />
-                <p>© 2025 David Hong. All rights reserved.</p>
-                <p>This web application is for educational and entertainment purposes only.</p>
+                <p>
+                    © 2025 David Hong. <Link to="https://github.com/Oasiris/VGMdle">Code</Link>{' '}
+                    licensed under the GNU General Public License v3.0.
+                </p>
                 <p>
                     All audio clips are property of their respective copyright holders and are used
                     under fair use for non-commercial, educational, and entertainment purposes.
@@ -70,6 +71,7 @@ function Layout() {
                     No part of this project should be interpreted as claiming ownership over any
                     copyrighted music or material from third-party games.
                 </p>
+                <p>This web application is for educational and entertainment purposes only.</p>
             </footer>
         </div>
     )
