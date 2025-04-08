@@ -1,0 +1,13 @@
+.guess-button {
+    background-color: #007bff;
+
+    &._active {
+        background-color: #0056b3;
+        color: white;
+    }
+
+    &._disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+}

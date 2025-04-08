@@ -8,6 +8,12 @@ module.exports = {
     trailingComma: 'all',
     overrides: [
         {
+            files: '*.tsx',
+            options: {
+                tabWidth: 2,
+            },
+        },
+        {
             files: '*.js',
             options: {
                 tabWidth: 2,

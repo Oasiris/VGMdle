@@ -19,7 +19,7 @@ const router = createBrowserRouter(
         // <Route path="/" element={<NavLayout />} errorElement={<ErrorBoundary />}>
         <Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
             <Route errorElement={<ErrorBoundary />}>
-                <Route index element={<GuessPage />} />
+                <Route index element={<GuessPage gameId={1} />} />
                 <Route path="about" element={<About />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="sample-page" element={<SamplePage />} />
