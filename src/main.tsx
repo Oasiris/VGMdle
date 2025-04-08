@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import './styles/lib/normalize.css'
 import './styles/lib/bootstrap-grid.min.css'
 import './styles/index.scss'
+import './styles/global.scss'
 
 import App from './App'
 
@@ -13,7 +14,7 @@ HELPFUL LINKS:
 */
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        <App />
-    </StrictMode>,
+  <StrictMode>
+    <App />
+  </StrictMode>,
 )

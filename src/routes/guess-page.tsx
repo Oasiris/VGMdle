@@ -91,7 +91,7 @@ export default function GuessPage({ gameId, autoPlayPref }: GuessPageProps) {
     }
   }, [gameState])
   return (
-    <>
+    <div className="main-container">
       <AudioFetcher paths={AUDIO_PATHS} onFetched={handleClipsFetched} />
 
       <code style={{ fontSize: '0.5em' }}>
@@ -184,6 +184,6 @@ export default function GuessPage({ gameId, autoPlayPref }: GuessPageProps) {
           <Link to={`/guess/${gameId + 1}`}>Next Puzzle</Link>
         </button>
       </div>
-    </>
+    </div>
   )
 }

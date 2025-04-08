@@ -11,6 +11,8 @@ import GuessPage from './routes/guess-page.tsx'
 import SamplePage from './routes/sample-page.tsx'
 import ErrorBoundary from './routes/error-boundary'
 
+import './App.scss'
+
 // Uncomment this when you're ready to replace "Not found" error boundary page with a dedicated "Not found" page.
 // import NoMatch from './routes/no-match'
 
@@ -35,45 +37,58 @@ const router = createBrowserRouter(
 
 export default function App() {
   return (
-    <div>
-      <h3>VGMdle</h3>
-
+    <>
       {/* Routes nest inside one another. Nested route paths build upon
                 parent route paths, and nested route elements render inside
                 parent route elements. See the note about <Outlet> below. */}
       <RouterProvider router={router} />
-    </div>
+    </>
   )
 }
 
 function Layout() {
   return (
-    <div>
-      <hr />
+    <>
+      <nav>
+        <div className="nav-container">
+          <div className="_left">
+            <button>GitHub</button>
+          </div>
+          <div className="_center">
+            <h1 className="_logo">VGMdle</h1>
+          </div>
+          <div className="_right">
+            <button>Day Select</button>
+          </div>
+        </div>
+      </nav>
 
       {/* An <Outlet> renders whatever child route is currently active,
             so you can think about this <Outlet> as a placeholder for
             the child routes we defined above. */}
-      <Outlet />
 
-      <hr />
+      <section className="main">
+        <Outlet />
+      </section>
 
-      <footer style={{ fontSize: '0.8em' }}>
-        <p>
-          © 2025 David Hong. <Link to="https://github.com/Oasiris/VGMdle">Code</Link> licensed
-          under the GNU General Public License v3.0.
-        </p>
-        <p>
-          Audio clips are included for non-commercial, educational, and entertainment purposes under
-          fair use.
-        </p>
-        <p>
-          This project makes no claim of ownership over any music or audio originating from
-          third-party games.
-        </p>
-        <p>This website is intended solely for educational and entertainment use.</p>
+      <footer className="text-center" style={{ fontSize: '0.8em' }}>
+        <div className="footer-container">
+          <p>
+            © 2025 David Hong. <Link to="https://github.com/Oasiris/VGMdle">Code</Link> licensed
+            under the GNU General Public License v3.0.
+          </p>
+          <p>
+            Audio clips are included for non-commercial, educational, and entertainment purposes
+            under fair use.
+          </p>
+          <p>
+            This project makes no claim of ownership over any music or audio originating from
+            third-party games.
+          </p>
+          <p>This website is intended solely for educational and entertainment use.</p>
+        </div>
       </footer>
-    </div>
+    </>
   )
 }
 
