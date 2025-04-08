@@ -18,7 +18,7 @@ const router = createBrowserRouter(
     createRoutesFromElements(
         // <Route path="/" element={<NavLayout />} errorElement={<ErrorBoundary />}>
         <Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
-        <Route errorElement={<ErrorBoundary />}>
+            <Route errorElement={<ErrorBoundary />}>
                 <Route index element={<GuessPage />} />
                 <Route path="about" element={<About />} />
                 <Route path="dashboard" element={<Dashboard />} />
@@ -36,9 +36,7 @@ const router = createBrowserRouter(
 export default function App() {
     return (
         <div>
-            <h3>
-                VGMdle
-            </h3>
+            <h3>VGMdle</h3>
 
             {/* Routes nest inside one another. Nested route paths build upon
                 parent route paths, and nested route elements render inside
@@ -62,7 +60,16 @@ function Layout() {
 
             <footer>
                 <br />
-                This is a basic footer.
+                <p>© 2025 David Hong. All rights reserved.</p>
+                <p>This web application is for educational and entertainment purposes only.</p>
+                <p>
+                    All audio clips are property of their respective copyright holders and are used
+                    under fair use for non-commercial, educational, and entertainment purposes.
+                </p>
+                <p>
+                    No part of this project should be interpreted as claiming ownership over any
+                    copyrighted music or material from third-party games.
+                </p>
             </footer>
         </div>
     )

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import AudioFetcher from '../components/audioFetcher'
@@ -14,16 +14,35 @@ const AUDIO_PATHS = [
     '../assets/audio/001_supermariobros/006-Overworld_Theme.mp3',
 ]
 
-export default function GuessPage({ gameId }: { gameId: number }) {
+interface GuessPageProps {
+    gameId: number
+    // autoPlay is a boolean that indicates whether to auto-play the audio. Default behavior is true
+    autoPlay?: boolean
+}
+
+export default function GuessPage({ gameId, autoPlay }: GuessPageProps) {
     const [songNumber, setSongNumber] = useState(1)
     const [guessNumber, setGuessNumber] = useState(1)
 
     // Audio clip logic
-    const [audioSrc, setAudioSrc] = useState<string[]>([])
+    const [hasInteracted, setHasInteracted] = useState(false)
+    const [audioSources, setAudioSources] = useState<string[]>([])
+    const [currentAudioSrc, setCurrentAudioSrc] = useState<string | null>(null)
 
     const handleClipsFetched = useCallback((sources: string[]) => {
-        setAudioSrc(sources)
+        setAudioSources(sources)
+        setCurrentAudioSrc(sources[songNumber - 1])
     }, [])
+
+    // Use a useEffect to auto-play when currentAudioSrc changes
+    useEffect(() => {
+        if (currentAudioSrc) {
+            const audioElement = document.getElementById('guess-audio') as HTMLAudioElement
+            if (hasInteracted && autoPlay !== false) {
+                audioElement?.play()
+            }
+        }
+    }, [currentAudioSrc, autoPlay])
 
     return (
         <>
@@ -34,24 +53,32 @@ export default function GuessPage({ gameId }: { gameId: number }) {
             <p>Song number: {songNumber}</p>
 
             {[1, 2, 3, 4, 5, 6].map((number) => (
-                <button key={number} onClick={() => setSongNumber(number)}>
+                <button
+                    key={number}
+                    onClick={() => {
+                        setHasInteracted(true)
+                        setSongNumber(number)
+                        setCurrentAudioSrc(audioSources[number - 1])
+                    }}
+                >
                     {number}
                 </button>
             ))}
 
-            <div style={{ width: '100%', height: '30px', backgroundColor: 'blue' }}>Song bar</div>
-
-            <div>{guessNumber <= 6 && '' + (6 - guessNumber) + ' guesses remaining!'}</div>
-
             <div>
-                <h3>Bam</h3>
-                {audioSrc.length > 0 && (
-                    <audio src={audioSrc[songNumber - 1]} controls>
+                {currentAudioSrc && (
+                    <audio id="guess-audio" src={currentAudioSrc} controls preload="auto">
                         Your browser does not support the audio element. Try again on a different
                         browser.
                     </audio>
                 )}
             </div>
+
+            <br />
+
+            <div>{guessNumber <= 6 && '' + (6 - guessNumber) + ' guesses remaining!'}</div>
+
+            <br />
 
             <div>
                 <form>
@@ -69,12 +96,14 @@ export default function GuessPage({ gameId }: { gameId: number }) {
                 </form>
             </div>
 
+            <br />
+
             <div>
                 <button className="leftArrow">
-                    <Link to={`/guess/${gameId} - 1`}>Prev</Link>
+                    <Link to={`/guess/${gameId} - 1`}>Prev Puzzle</Link>
                 </button>
                 <button className="rightArrow">
-                    <Link to={`/guess/${gameId + 1}`}>Next</Link>
+                    <Link to={`/guess/${gameId + 1}`}>Next Puzzle</Link>
                 </button>
             </div>
         </>
