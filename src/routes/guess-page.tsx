@@ -1,17 +1,17 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import AudioLoader from '../components/audioLoader'
+import AudioFetcher from '../components/audioFetcher'
 
 // import audio1 from '../assets/audio/001_supermariobros/001-Castle_Clear.mp3'
 
 const AUDIO_PATHS = [
     '../assets/audio/001_supermariobros/001-Castle_Clear.mp3',
-    '../assets/audio/001_supermariobros/002-Overworld.mp3',
-    '../assets/audio/001_supermariobros/003-Underwater.mp3',
-    '../assets/audio/001_supermariobros/004-Underworld.mp3',
-    '../assets/audio/001_supermariobros/005-Invincible.mp3',
-    '../assets/audio/001_supermariobros/006-Game_Over.mp3',
+    '../assets/audio/001_supermariobros/002-Ending_Theme.mp3',
+    '../assets/audio/001_supermariobros/003-Underwater_Theme.mp3',
+    '../assets/audio/001_supermariobros/004-Castle_Theme.mp3',
+    '../assets/audio/001_supermariobros/005-Underground_Theme.mp3',
+    '../assets/audio/001_supermariobros/006-Overworld_Theme.mp3',
 ]
 
 export default function GuessPage({ gameId }: { gameId: number }) {
@@ -19,19 +19,15 @@ export default function GuessPage({ gameId }: { gameId: number }) {
     const [guessNumber, setGuessNumber] = useState(1)
 
     // Audio clip logic
-    const [clips, setClips] = useState<HTMLAudioElement[]>([])
+    const [audioSrc, setAudioSrc] = useState<string[]>([])
 
-    const handleClipsLoaded = (loaded: HTMLAudioElement[]) => {
-        setClips(loaded)
-        console.log('Clips available in parent:', loaded)
-
-        // Example: autoplay first one
-        loaded[0]?.play()
-    }
+    const handleClipsFetched = useCallback((sources: string[]) => {
+        setAudioSrc(sources)
+    }, [])
 
     return (
         <>
-            <AudioLoader audioPaths={AUDIO_PATHS} onLoaded={handleClipsLoaded} />
+            <AudioFetcher paths={AUDIO_PATHS} onFetched={handleClipsFetched} />
 
             <p>Game #001 – Tuesday, April 1, 2024</p>
 
@@ -49,15 +45,13 @@ export default function GuessPage({ gameId }: { gameId: number }) {
 
             <div>
                 <h3>Bam</h3>
-                <p>{console.log(clips)}</p>
+                {audioSrc.length > 0 && (
+                    <audio src={audioSrc[songNumber - 1]} controls>
+                        Your browser does not support the audio element. Try again on a different
+                        browser.
+                    </audio>
+                )}
             </div>
-            {/* <audio src={clips[0]} controls /> */}
-
-            {/* <audio controls>
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio> */}
 
             <div>
                 <form>
