@@ -1,5 +1,5 @@
 export type Game = {
-    answer: string
+    title: string
     year?: number
     system?: string
     composersMain?: string[]
@@ -9,7 +9,7 @@ export type Game = {
 
 export const VGMDLE_ANSWER_KEY: Record<string, Game> = {
     '1': {
-        answer: 'Super Mario Bros.',
+        title: 'Super Mario Bros.',
         year: 1985,
         system: 'NES',
         composersMain: ['Koji Kondo'],

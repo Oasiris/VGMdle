@@ -20,8 +20,8 @@ const AUDIO_PATHS = [
 
 interface GuessPageProps {
   gameId: number
-  // autoPlay is a boolean that indicates whether to auto-play the audio. Default behavior is true
-  autoPlay?: boolean
+  // autoPlayPref is a boolean that indicates whether to auto-play the audio. Default behavior is true
+  autoPlayPref?: boolean
 }
 
 enum GameState {
@@ -30,10 +30,11 @@ enum GameState {
   GAME_OVER = 'gameOver',
 }
 
-export default function GuessPage({ gameId, autoPlay }: GuessPageProps) {
+export default function GuessPage({ gameId, autoPlayPref }: GuessPageProps) {
   const [songNumber, setSongNumber] = useState<number>(1)
   const [guessNumber, setGuessNumber] = useState(1)
   const [hasInteracted, setHasInteracted] = useState(false)
+  const [autoPlay, setAutoPlay] = useState(autoPlayPref ?? true)
 
   const [guessText, setGuessText] = useState('')
 
@@ -51,7 +52,7 @@ export default function GuessPage({ gameId, autoPlay }: GuessPageProps) {
   const handleGuess = useCallback(
     (guess: string) => {
       setHasInteracted(true)
-      const answer = VGMDLE_ANSWER_KEY[String(gameId)].answer
+      const answer = VGMDLE_ANSWER_KEY[String(gameId)].title
       console.log('Comparing ' + guess + ' to ' + answer)
       if (guess === answer) {
         console.log('Correct guess!')
@@ -83,12 +84,17 @@ export default function GuessPage({ gameId, autoPlay }: GuessPageProps) {
       }
     }
   }, [audioLoaded, songNumber, hasInteracted, autoPlay])
-
+  // Turn off auto-play when the game is over
+  useEffect(() => {
+    if (gameState === GameState.GAME_OVER || gameState === GameState.CORRECT) {
+      setAutoPlay(false)
+    }
+  }, [gameState])
   return (
     <>
       <AudioFetcher paths={AUDIO_PATHS} onFetched={handleClipsFetched} />
 
-      <code>
+      <code style={{ fontSize: '0.5em' }}>
         <p>
           {JSON.stringify({
             // currentAudioSrc,

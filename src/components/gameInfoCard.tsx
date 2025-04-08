@@ -5,6 +5,8 @@ This card appears when the puzzle is either completed or failed
 import { useEffect, useState } from 'react'
 import { VGMDLE_ANSWER_KEY } from '../data/answerKey'
 
+import './gameInfoCard.scss'
+
 // Create lazy glob map of all images
 const imageModules = import.meta.glob('../assets/images/**/*.{png,jpg,jpeg,webp,gif}', {
   as: 'url',
@@ -38,14 +40,18 @@ export default function GameInfoCard({ gameId }: GameInfoCardProps) {
 
   return (
     <div>
-      <div className="row">
+      <section className="game-info-card">
         <div className="left">
-          {game.coverThumb && imageSrc && (
-            <img src={imageSrc} alt="Game Cover" className="game-cover" />
-          )}
+          <div className="image-container">
+            {game.coverThumb && imageSrc && (
+              <img src={imageSrc} alt="Game Cover" className="game-cover" />
+            )}
+          </div>
         </div>
-        <div className="right"></div>
-      </div>
+        <div className="right">
+          <h2>{game.title}</h2>
+        </div>
+      </section>
     </div>
   )
 }
